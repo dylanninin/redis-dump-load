@@ -480,16 +480,17 @@ def _writer(r, p, key, type, value, ttl, expireat, use_expireat):
     else:
         raise UnknownTypeError("Unknown key type: %s" % type)
 
-    if use_expireat:
-        if expireat is not None:
-            r.pexpireat_or_expireat_pipeline(p, key, expireat)
-        elif ttl is not None:
-            r.pexpire_or_expire_pipeline(p, key, ttl)
-    else:
-        if ttl is not None:
-            r.pexpire_or_expire_pipeline(p, key, ttl)
-        elif expireat is not None:
-            r.pexpireat_or_expireat_pipeline(p, key, expireat)
+    # BUG: Disable ttl
+    # if use_expireat:
+    #     if expireat is not None:
+    #         r.pexpireat_or_expireat_pipeline(p, key, expireat)
+    #     elif ttl is not None:
+    #         r.pexpire_or_expire_pipeline(p, key, ttl)
+    # else:
+    #     if ttl is not None:
+    #         r.pexpire_or_expire_pipeline(p, key, ttl)
+    #     elif expireat is not None:
+    #         r.pexpireat_or_expireat_pipeline(p, key, expireat)
 
 def main():
     import optparse
